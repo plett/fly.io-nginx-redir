@@ -1,0 +1,25 @@
+#!/usr/bin/env /node_modules/bats/bin/bats
+
+load '/node_modules/bats-support/load'
+load '/node_modules/bats-assert/load'
+
+@test "can connect to server" {
+        i=0
+        while ! nc -z web 8080
+        do
+                echo Failed to connect
+                ((i=$i+1))
+                if [[ "$i" -gt 5 ]]; then
+                        fail Timeout
+                fi
+                echo sleeping
+                sleep 2
+        done
+        assert_success
+}
+
+@test "get a correct redirect" {
+        run curl -o /dev/null -v --silent http://m0pll.co.uk:8080
+        assert_line -e "^< HTTP/1.1 301 .*$"
+        assert_line -e "^< [Ll]ocation: https://plett\.uk/\r$"
+}
