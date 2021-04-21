@@ -39,10 +39,20 @@ In this instance it's the `nginx` Docker image that we are building on top of
 and the versions of the actions in the GitHub workflow. It will make pull
 requests with changes to bump versions.
 
+## CI testing
+
+Through a remarkably convoluted method, I am using GitHub Actions to run tests
+on every push. It uses docker compose to run the nginx container and also a
+testing container which runs Bats and verifies that the container works and
+serves a valid redirection.
+
 ## Future steps
 
-* Add CI testing
-* probably doing that by making Github build a docker image (stored in GHCR?),
-  testing that, and then using `image` deployment to Fly insted of `docker`
-  builder. This will ensure that the image which has passed testing is
-  byte-for-byte identical to what is running in production.
+At the moment GitHub builds the container twice - once to run tests on it and
+then again as it gets deployed to Fly. There is a remote possible that these two
+images might differ and the deployed image might be broken.
+
+This could be fixed by building a docker image, testing it, and then pushing it
+to a registry (GHCR?) once tests have passed. Fly can then be changed over to
+use the `image` deployment method instead of the `docker` builder, so the
+deployed image is byte-for-byte identical to the one that passed testing.
