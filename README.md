@@ -46,13 +46,21 @@ on every push. It uses docker compose to run the nginx container and also a
 testing container which runs Bats and verifies that the container works and
 serves a valid redirection.
 
+I'm not happy with the number of third party dependencies this testing requires.
+At the moment GitHub Actions runs an Ubuntu container, which runs Docker
+Compose, which runs both nginx and a bash container for the tests. In the bash
+container, NPM is run, which installs Bats, which runs curl to test the site. It
+feels like that could be massively simplified.
+
 ## Future steps
 
 At the moment GitHub builds the container twice - once to run tests on it and
-then again as it gets deployed to Fly. There is a remote possible that these two
-images might differ and the deployed image might be broken.
+then again as it gets deployed to Fly. As well as duplicating work, there is a
+remote possible that these two images might differ and the deployed image might
+be broken.
 
 This could be fixed by building a docker image, testing it, and then pushing it
-to a registry (GHCR?) once tests have passed. Fly can then be changed over to
-use the `image` deployment method instead of the `docker` builder, so the
-deployed image is byte-for-byte identical to the one that passed testing.
+to a registry (GitHub Container Registry?) once tests have passed. Fly can then
+be changed over to use the `image` deployment method instead of the `docker`
+builder, so the deployed image is byte-for-byte identical to the one that passed
+testing.
