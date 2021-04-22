@@ -5,9 +5,6 @@ app = "bold-silence-8386"
 kill_signal = "SIGINT"
 kill_timeout = 5
 
-[build]
-  image = "ghcr.io/plett/fly.io-nginx-redir:$GITHUB_SHA"
-
 [[services]]
   internal_port = 8080
   protocol = "tcp"
