@@ -1,7 +1,7 @@
 version: '2'
 services:
   web:
-    build: .
+    image: ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
     networks:
       mynet:
         aliases:
