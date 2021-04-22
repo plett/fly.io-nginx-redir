@@ -1,10 +1,12 @@
-# fly.io nginx redirection
+# Fly.io nginx redirection
 
-Experiment with fly.io by deploying a very minimal nginx server to just serve
-HTTP 301 redirects, and automate deployments for that with GitHub Actions. 
+Experiment with https://fly.io/ by deploying a very minimal nginx server to just
+serve HTTP 301 redirects, and automate deployments for that with GitHub Actions
+and GitHub Container Registry.
 
 Don't copy this if you want to serve HTTP redirects, there are many better ways
-of doing that. This is mainly about experimenting with Fly and GitHub Actions.
+of doing that. This is mainly about experimenting with Fly, GitHub Actions and
+GHCR.
 
 ## Initial standalone deployment
 
@@ -47,20 +49,39 @@ testing container which runs Bats and verifies that the container works and
 serves a valid redirection.
 
 I'm not happy with the number of third party dependencies this testing requires.
-At the moment GitHub Actions runs an Ubuntu container, which runs Docker
-Compose, which runs both nginx and a bash container for the tests. In the bash
-container, NPM is run, which installs Bats, which runs curl to test the site. It
-feels like that could be massively simplified.
+At the moment GitHub Actions starts an Ubuntu container, which runs Docker
+Compose, which runs both our nginx container and a bash container for the tests.
+In the bash container, NPM is run, which installs Bats, which runs curl to test
+the site. It feels like that could be massively simplified.
+
+## GitHub Container Registry
+
+GitHub Container Registry (GHCR) is still in beta as of the time of writing, so
+this bit might be all wrong by the time you read it.
+
+The Fly `docker` builder which we used in the initial standalone deployment builds
+the container at deployment time and stores it in Fly's own registry to deploy
+from. But we also need the container to exist during the CI testing stage -
+which needs to happen before deployment, so it gets built then as well.
+
+To avoid this duplication of work and to also solve the potential problem of the
+deployed image differing from the one we tested due to different toolchains, you
+should build the image once, then test it, then deploy it once the tests have
+passed.
+
+I'm storing this image in GHCR after building, and have set the GitHub workflow
+to tag the image with the hash of the git commit it was built from, and the
+testing and Fly deploy are configured to pull the image from GHCR when they
+need it.
 
 ## Future steps
 
-At the moment GitHub builds the container twice - once to run tests on it and
-then again as it gets deployed to Fly. As well as duplicating work, there is a
-remote possible that these two images might differ and the deployed image might
-be broken.
+At the moment there is only one GitHub Actions workflow which contains jobs for
+build, publish, test and deploy and the workflow is triggered on pushes to any
+branch. The deploy job has a restriction so it only runs for pushes to the
+master branch, but that means we're publishing a container to the registry for
+ephemeral things like the pushes that happen as part of a Pull Request.
 
-This could be fixed by building a docker image, testing it, and then pushing it
-to a registry (GitHub Container Registry?) once tests have passed. Fly can then
-be changed over to use the `image` deployment method instead of the `docker`
-builder, so the deployed image is byte-for-byte identical to the one that passed
-testing.
+There is no need to publish those to GHCR where they are stored forever, so I
+should make a second workflow to run for merge request pushes which builds and
+tests "locally" without pushing to a registry
