@@ -1,0 +1,16 @@
+name: PR-test
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          docker-compose --file docker-compose.pull-request.test.yml build
+          docker-compose --file docker-compose.pull-request.test.yml run tests

@@ -1,0 +1,20 @@
+version: '2'
+services:
+  web:
+    build: .
+    networks:
+      mynet:
+        aliases:
+          - 'm0pll.co.uk'
+          - 'www.m0pll.co.uk'
+  tests:
+    build: tests
+    depends_on:
+      - web
+    networks:
+      - mynet
+
+networks:
+  mynet:
+
+
