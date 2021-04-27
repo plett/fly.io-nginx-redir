@@ -73,15 +73,3 @@ I'm storing this image in GHCR after building, and have set the GitHub workflow
 to tag the image with the hash of the git commit it was built from, and the
 testing and Fly deploy are configured to pull the image from GHCR when they
 need it.
-
-## Future steps
-
-At the moment there is only one GitHub Actions workflow which contains jobs for
-build, publish, test and deploy and the workflow is triggered on pushes to any
-branch. The deploy job has a restriction so it only runs for pushes to the
-master branch, but that means we're publishing a container to the registry for
-ephemeral things like the pushes that happen as part of a Pull Request.
-
-There is no need to publish those to GHCR where they are stored forever, so I
-should make a second workflow to run for merge request pushes which builds and
-tests "locally" without pushing to a registry
