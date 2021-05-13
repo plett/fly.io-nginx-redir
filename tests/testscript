@@ -5,7 +5,7 @@ load '/node_modules/bats-assert/load'
 
 @test "can connect to server" {
         i=0
-        while ! nc -z web 8080
+        while ! nc -z web 80
         do
                 echo Failed to connect
                 ((i=$i+1))
@@ -18,8 +18,8 @@ load '/node_modules/bats-assert/load'
         assert_success
 }
 
-@test "get a correct redirect" {
-        run curl -o /dev/null -v --silent http://m0pll.co.uk:8080
+@test "m0pll.co.uk redirect to plett.uk" {
+        run curl -o /dev/null -v --silent http://m0pll.co.uk
         assert_line -e "^< HTTP/1.1 301 .*$"
         assert_line -e "^< [Ll]ocation: https://plett\.uk/\r$"
 }
