@@ -23,3 +23,14 @@ load '/node_modules/bats-assert/load'
         assert_line -e "^< HTTP/1.1 301 .*$"
         assert_line -e "^< [Ll]ocation: https://plett\.uk/\r$"
 }
+
+@test "www.m0pll.co.uk redirect to plett.uk" {
+        run curl -o /dev/null -v --silent http://www.m0pll.co.uk
+        assert_line -e "^< HTTP/1.1 301 .*$"
+        assert_line -e "^< [Ll]ocation: https://plett\.uk/\r$"
+}
+
+@test "web 404" {
+        run curl -o /dev/null -v --silent http://web
+        assert_line -e "^< HTTP/1.1 404 .*$"
+}
