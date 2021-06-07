@@ -73,3 +73,10 @@ I'm storing this image in GHCR after building, and have set the GitHub workflow
 to tag the image with the hash of the git commit it was built from, and the
 testing and Fly deploy are configured to pull the image from GHCR when they
 need it.
+
+# Feature Creep
+
+I have had a desire for some time now to run my own https://icanhazip.com/
+equivalent service to return back the user's IP address. This has nothing to do
+with serving 301 redirects, but it's trivial to do with a few lines of nginx
+config, so that's now up on https://ip.plett.net/ .
