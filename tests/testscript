@@ -34,3 +34,8 @@ load '/node_modules/bats-assert/load'
         run curl -o /dev/null -v --silent http://web
         assert_line -e "^< HTTP/1.1 404 .*$"
 }
+
+@test "ip.plett.net 200" {
+	run curl -o /dev/null -v --silent http://ip.plett.net/
+	assert_line -e "^< HTTP/1.1 200.*$"
+}
