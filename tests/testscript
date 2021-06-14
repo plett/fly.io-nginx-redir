@@ -39,3 +39,13 @@ load '/node_modules/bats-assert/load'
         run curl --silent ip.plett.net -H "Fly-Client-IP: 1.2.3.4"
         assert_line -e "^1.2.3.4$"
 }
+
+@test "ip.plett.net/robots.txt" {
+        run curl -o /dev/null -v --silent http://ip.plett.net/robots.txt
+        assert_line -e "^< HTTP/1.1 200 .*$"
+}
+
+@test "ip.plett.net 404" {
+        run curl -o /dev/null -v --silent http://ip.plett.net/nosuchfile.txt
+        assert_line -e "^< HTTP/1.1 404 .*$"
+}
