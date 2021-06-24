@@ -8,6 +8,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     name: Build and Push to GHCR
     steps:
       - name: Checkout Code
@@ -27,6 +30,8 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: publish
     steps:
       - uses: actions/checkout@v2.3.4
@@ -40,6 +45,7 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    permissions:
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: superfly/flyctl-actions@1.1
