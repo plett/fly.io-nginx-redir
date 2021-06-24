@@ -45,7 +45,6 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    permissions:
     steps:
       - uses: actions/checkout@v2.3.4
       - uses: superfly/flyctl-actions@1.1
