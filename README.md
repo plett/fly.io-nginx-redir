@@ -50,14 +50,15 @@ serves a valid redirection.
 
 I'm not happy with the number of third party dependencies this testing requires.
 At the moment GitHub Actions starts an Ubuntu container, which runs Docker
-Compose, which runs both our nginx container and a bash container for the tests.
+Compose, which builds both our nginx container and a bash container for the tests.
 In the bash container, NPM is run, which installs Bats, which runs curl to test
 the site. It feels like that could be massively simplified.
 
 ## GitHub Container Registry
 
-GitHub Container Registry (GHCR) is still in beta as of the time of writing, so
-this bit might be all wrong by the time you read it.
+<s>GitHub Container Registry (GHCR) is still in beta as of the time of writing, so
+this bit might be all wrong by the time you read it.</s> 
+*GHCR is generally available now, and this is all still accurate.*
 
 The Fly `docker` builder which we used in the initial standalone deployment builds
 the container at deployment time and stores it in Fly's own registry to deploy
