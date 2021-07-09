@@ -8,6 +8,8 @@ services:
           - 'm0pll.co.uk'
           - 'www.m0pll.co.uk'
           - 'ip.plett.net'
+          - 'ipv4.plett.net'
+          - 'ipv6.plett.net'
     environment:
       - FLY_REGION=none
   tests:

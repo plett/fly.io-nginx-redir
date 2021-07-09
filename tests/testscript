@@ -40,6 +40,16 @@ load '/node_modules/bats-assert/load'
         assert_line -e "^1.2.3.4$"
 }
 
+@test "ipv4.plett.net" {
+        run curl --silent ipv4.plett.net -H "Fly-Client-IP: 1.2.3.4"
+        assert_line -e "^1.2.3.4$"
+}
+
+@test "ipv6.plett.net" {
+        run curl --silent ipv6.plett.net -H "Fly-Client-IP: 1.2.3.4"
+        assert_line -e "^1.2.3.4$"
+}
+
 @test "ip.plett.net/robots.txt" {
         run curl -o /dev/null -v --silent http://ip.plett.net/robots.txt
         assert_line -e "^< HTTP/1.1 200 .*$"
