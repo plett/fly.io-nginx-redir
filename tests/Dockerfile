@@ -5,7 +5,7 @@ RUN apk add npm curl
 WORKDIR /
 
 COPY package.json .
-RUN npm install --legacy-peer-deps
+RUN npm install -g --legacy-peer-deps
 
 COPY testscript .
 CMD /testscript
