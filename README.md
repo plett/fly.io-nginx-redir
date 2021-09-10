@@ -43,16 +43,16 @@ requests with changes to bump versions.
 
 ## CI testing
 
-Through a remarkably convoluted method, I am using GitHub Actions to run tests
-on every push. It uses docker compose to run the nginx container and also a
-testing container which runs Bats and verifies that the container works and
-serves a valid redirection.
+I am using GitHub Actions to run tests on every push. It uses docker compose to
+run the nginx container and also a testing container which runs
+[Bats](https://github.com/bats-core/bats-core) and
+verifies that the container works and serves a valid redirection.
 
 I'm not happy with the number of third party dependencies this testing requires.
 At the moment GitHub Actions starts an Ubuntu container, which runs Docker
-Compose, which builds both our nginx container and a bash container for the tests.
-In the bash container, NPM is run, which installs Bats, which runs curl to test
-the site. It feels like that could be massively simplified.
+Compose, which builds both the nginx container and a Bats container for the
+tests. In the Bats container, Bats runs curl to test the site. It feels like
+that could be massively simplified.
 
 ## GitHub Container Registry
 

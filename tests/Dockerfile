@@ -1,6 +1,11 @@
-FROM bash:5.1.8
-RUN apk add npm curl
-COPY package.json .
-RUN npm install
-COPY testscript .
-CMD /testscript
+FROM bats/bats:v1.4.1
+
+RUN apk add curl
+
+CMD mkdir /code
+WORKDIR /code
+
+COPY batsfiles .
+
+ENTRYPOINT ["/tini", "--", "bash"]
+CMD ["bats", "/code/test.bats"]
