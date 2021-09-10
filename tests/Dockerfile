@@ -1,7 +1,12 @@
 FROM bash:5.1.8
+
 RUN apk add npm curl
-# this is a noop comment
+
+RUN mkdir -p /code
+WORKDIR /code
+
 COPY package.json .
 RUN npm install
+
 COPY testscript .
-CMD /testscript
+CMD testscript
