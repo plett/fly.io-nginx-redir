@@ -6,7 +6,7 @@ RUN mkdir -p /code
 WORKDIR /code
 
 COPY package.json .
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 COPY testscript .
 CMD testscript
