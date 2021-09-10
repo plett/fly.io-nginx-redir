@@ -9,4 +9,4 @@ COPY package.json .
 RUN npm install --legacy-peer-deps
 
 COPY testscript .
-CMD testscript
+CMD /code/testscript
