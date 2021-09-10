@@ -11,11 +11,6 @@ updates:
     schedule:
       interval: "daily"
 
-  - package-ecosystem: "npm"
-    directory: "/tests"
-    schedule:
-      interval: "daily"
-
   - package-ecosystem: "docker"
     directory: "/tests"
     schedule:
