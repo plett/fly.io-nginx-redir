@@ -2,11 +2,10 @@ FROM bash:5.1.8
 
 RUN apk add npm curl
 
-RUN mkdir -p /code
-WORKDIR /code
+WORKDIR /
 
 COPY package.json .
 RUN npm install --legacy-peer-deps
 
 COPY testscript .
-CMD /code/testscript
+CMD /testscript
