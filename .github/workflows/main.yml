@@ -35,6 +35,8 @@ jobs:
     needs: publish
     steps:
       - uses: actions/checkout@v2.3.4
+        with:
+          submodules: recursive
       - name: Run tests
         run: |
           docker-compose --file docker-compose.test.yml build
