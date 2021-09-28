@@ -10,6 +10,7 @@ services:
           - 'ip.plett.net'
           - 'ipv4.plett.net'
           - 'ipv6.plett.net'
+          - 'bold-silence-8386.fly.dev'
     environment:
       - FLY_REGION=none
   tests:
