@@ -59,3 +59,9 @@ load 'test_helper/bats-assert/load'
         run curl -o /dev/null -v --silent http://ip.plett.net/nosuchfile.txt
         assert_line -e "^< HTTP/1.1 404 .*$"
 }
+
+@test "bold-silence-8386.fly.dev redirect to github" {
+        run curl -o /dev/null -v --silent http://bold-silence-8386.fly.dev
+        assert_line -e "^< HTTP/1.1 301 .*$"
+        assert_line -e "^< [Ll]ocation: https://github\.com/plett/fly\.io-nginx-redir\r$"
+}
