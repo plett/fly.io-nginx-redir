@@ -1,4 +1,4 @@
-FROM bats/bats:1.8.2
+FROM bats/bats:1.9.0
 
 RUN apk add curl
 
