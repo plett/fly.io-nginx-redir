@@ -41,8 +41,8 @@ jobs:
           submodules: recursive
       - name: Run tests
         run: |
-          docker-compose --file docker-compose.test.yml build
-          docker-compose --file docker-compose.test.yml run tests
+          docker compose --file docker-compose.test.yml build
+          docker compose --file docker-compose.test.yml run tests
 
   deploy:
     name: Deploy to Fly
