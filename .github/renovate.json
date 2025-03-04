@@ -4,11 +4,4 @@
   "labels": ["dependencies"],
   "automergeStrategy": "merge-commit",
   "prHourlyLimit": 2,
-  hostRules: [
-    {
-      hostType: 'docker',
-      username: '<your-username>',
-      password: process.env.DOCKER_HUB_PASSWORD,
-    },
-  ],
 }
