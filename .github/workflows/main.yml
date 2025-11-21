@@ -16,7 +16,7 @@ jobs:
     name: Build and Push to GHCR
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v5.0.1
+        uses: actions/checkout@v6.0.0
       - name: Log in to GHCR
         uses: docker/login-action@v3.6.0
         with:
@@ -36,7 +36,7 @@ jobs:
       contents: read
     needs: publish
     steps:
-      - uses: actions/checkout@v5.0.1
+      - uses: actions/checkout@v6.0.0
         with:
           submodules: recursive
       - name: Run tests
@@ -52,7 +52,7 @@ jobs:
     permissions:
       contents: none
     steps:
-      - uses: actions/checkout@v5.0.1
+      - uses: actions/checkout@v6.0.0
       - uses: superfly/flyctl-actions@1.5
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
